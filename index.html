@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA — Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --charcoal: #1A1A1A;
+    --terracotta: #C4622D;
+    --gold: #C9A84C;
+    --light: #FAF8F4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--cream); color: var(--charcoal); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(245,240,232,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(26,26,26,0.08);
+  }
+  .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; letter-spacing: 0.1em; color: var(--charcoal); text-decoration: none; }
+  .logo span { color: var(--terracotta); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--charcoal); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--terracotta); }
+  .nav-right { display: flex; gap: 1.5rem; align-items: center; }
+  .nav-icon { font-size: 1.2rem; cursor: pointer; transition: transform 0.2s; }
+  .nav-icon:hover { transform: scale(1.15); }
+  .cart-badge { position: relative; }
+  .badge { position: absolute; top: -6px; right: -6px; background: var(--terracotta); color: #fff; border-radius: 50%; font-size: 0.6rem; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 4rem 6rem 6rem;
+    animation: fadeUp 1s ease both;
+  }
+  .hero-tag { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 1.5rem; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 5vw, 5.5rem); font-weight: 900; line-height: 1.05; margin-bottom: 1.5rem; }
+  .hero-title em { font-style: italic; color: var(--terracotta); }
+  .hero-sub { font-size: 1rem; color: #555; line-height: 1.7; max-width: 400px; margin-bottom: 2.5rem; font-weight: 300; }
+  .btn-primary {
+    display: inline-block; padding: 1rem 2.5rem;
+    background: var(--charcoal); color: var(--cream);
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; transition: all 0.3s; border: 2px solid var(--charcoal);
+    width: fit-content;
+  }
+  .btn-primary:hover { background: var(--terracotta); border-color: var(--terracotta); transform: translateY(-2px); }
+  .btn-outline {
+    display: inline-block; padding: 1rem 2.5rem;
+    background: transparent; color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; transition: all 0.3s; border: 2px solid var(--charcoal);
+    margin-left: 1rem;
+  }
+  .btn-outline:hover { background: var(--charcoal); color: var(--cream); }
+  .hero-right {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #E8DDD0 0%, #D4C4B0 100%);
+    animation: fadeIn 1.2s ease both;
+  }
+  .hero-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 1rem;
+  }
+  .hero-img-placeholder .big-icon { font-size: 8rem; opacity: 0.3; }
+  .hero-badge {
+    position: absolute; bottom: 3rem; left: -1.5rem;
+    background: var(--terracotta); color: #fff;
+    padding: 1.2rem 1.5rem; text-align: center;
+    box-shadow: 4px 4px 0 var(--charcoal);
+  }
+  .hero-badge .big-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; display: block; }
+  .hero-badge .small-text { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* MARQUEE */
+  .marquee-bar {
+    background: var(--charcoal); color: var(--cream);
+    padding: 0.9rem 0; overflow: hidden; white-space: nowrap;
+  }
+  .marquee-inner { display: inline-block; animation: marquee 20s linear infinite; }
+  .marquee-inner span { margin: 0 2rem; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 400; }
+  .marquee-inner span.dot { color: var(--terracotta); margin: 0 0.5rem; }
+
+  /* CATEGORIES */
+  .categories { padding: 6rem 5rem; }
+  .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 3rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; }
+  .section-link { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terracotta); text-decoration: none; font-weight: 500; }
+  .category-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1.5rem; }
+  .cat-card {
+    position: relative; overflow: hidden; cursor: pointer;
+    border-radius: 2px;
+    transition: transform 0.4s;
+  }
+  .cat-card:hover { transform: translateY(-4px); }
+  .cat-card:hover .cat-overlay { opacity: 1; }
+  .cat-bg {
+    height: 380px; display: flex; align-items: center; justify-content: center;
+    font-size: 5rem;
+  }
+  .cat-card:nth-child(1) .cat-bg { background: linear-gradient(145deg, #D4C4B0, #B8A898); }
+  .cat-card:nth-child(2) .cat-bg { background: linear-gradient(145deg, #C8D4C0, #A8B898); height: 280px; }
+  .cat-card:nth-child(3) .cat-bg { background: linear-gradient(145deg, #C4B8D8, #A898C0); height: 280px; }
+  .cat-info { padding: 1.2rem 0; }
+  .cat-info h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 0.3rem; }
+  .cat-info p { font-size: 0.8rem; color: #888; letter-spacing: 0.05em; }
+  .cat-overlay {
+    position: absolute; inset: 0; background: rgba(26,26,26,0.4);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .cat-overlay span {
+    color: #fff; font-size: 0.8rem; letter-spacing: 0.15em;
+    text-transform: uppercase; font-weight: 500;
+    border-bottom: 1px solid #fff; padding-bottom: 3px;
+  }
+
+  /* FEATURED PRODUCTS */
+  .featured { padding: 2rem 5rem 6rem; }
+  .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .product-card { cursor: pointer; }
+  .product-card:hover .product-img { transform: scale(1.04); }
+  .product-card:hover .add-btn { opacity: 1; bottom: 0.8rem; }
+  .product-img-wrap { position: relative; overflow: hidden; border-radius: 2px; margin-bottom: 1rem; }
+  .product-img {
+    height: 300px; width: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    transition: transform 0.5s;
+  }
+  .product-card:nth-child(1) .product-img { background: linear-gradient(145deg, #E8DDD0, #D4C4B0); }
+  .product-card:nth-child(2) .product-img { background: linear-gradient(145deg, #D0D8E8, #B8C4D4); }
+  .product-card:nth-child(3) .product-img { background: linear-gradient(145deg, #E8D0D0, #D4B8B8); }
+  .product-card:nth-child(4) .product-img { background: linear-gradient(145deg, #D0E8D4, #B8D4BC); }
+  .product-tag-pill {
+    position: absolute; top: 0.8rem; left: 0.8rem;
+    background: var(--terracotta); color: #fff;
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.3rem 0.7rem; font-weight: 500;
+  }
+  .wishlist-btn {
+    position: absolute; top: 0.8rem; right: 0.8rem;
+    background: #fff; border: none; cursor: pointer;
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+  .wishlist-btn:hover { transform: scale(1.2); }
+  .add-btn {
+    position: absolute; bottom: -40px; left: 0.8rem; right: 0.8rem;
+    background: var(--charcoal); color: var(--cream);
+    border: none; padding: 0.75rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.75rem;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+    opacity: 0; transition: all 0.3s; font-weight: 500;
+  }
+  .product-brand { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 0.3rem; }
+  .product-name { font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.5rem; }
+  .product-price { display: flex; align-items: center; gap: 0.7rem; }
+  .price-now { font-weight: 600; font-size: 1rem; }
+  .price-old { font-size: 0.85rem; color: #aaa; text-decoration: line-through; }
+  .stars { font-size: 0.7rem; color: var(--gold); letter-spacing: 1px; }
+
+  /* BANNER */
+  .promo-banner {
+    margin: 2rem 5rem;
+    background: var(--charcoal);
+    padding: 4rem 5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .promo-banner::before {
+    content: ''; position: absolute; right: -60px; top: -60px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: rgba(196,98,45,0.15);
+  }
+  .promo-text h2 { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: var(--cream); font-weight: 900; margin-bottom: 0.7rem; }
+  .promo-text h2 em { color: var(--gold); }
+  .promo-text p { color: #aaa; font-size: 0.95rem; font-weight: 300; }
+  .promo-code { background: rgba(255,255,255,0.08); border: 1px dashed rgba(255,255,255,0.3); padding: 1.5rem 2.5rem; text-align: center; }
+  .promo-code .code { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); font-weight: 700; letter-spacing: 0.1em; display: block; }
+  .promo-code .code-label { font-size: 0.7rem; color: #888; letter-spacing: 0.15em; text-transform: uppercase; }
+  .promo-btn { padding: 1rem 2.5rem; background: var(--terracotta); color: #fff; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; font-weight: 500; transition: all 0.3s; text-decoration: none; display: inline-block; }
+  .promo-btn:hover { background: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal); color: var(--cream);
+    padding: 4rem 5rem 2rem;
+    margin-top: 4rem;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand .logo { font-size: 1.5rem; color: var(--cream); display: block; margin-bottom: 1rem; }
+  .footer-brand p { font-size: 0.85rem; color: #888; line-height: 1.7; max-width: 280px; font-weight: 300; }
+  .footer-col h4 { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; margin-bottom: 1.2rem; color: #ccc; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col ul a { color: #888; text-decoration: none; font-size: 0.85rem; transition: color 0.2s; font-weight: 300; }
+  .footer-col ul a:hover { color: var(--terracotta); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 0.75rem; color: #666; }
+  .footer-social { display: flex; gap: 1rem; }
+  .social-icon { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; text-decoration: none; color: #888; }
+  .social-icon:hover { border-color: var(--terracotta); color: var(--terracotta); }
+
+  @keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="shop-home.html" class="logo">AU<span>R</span>A</a>
+  <ul class="nav-links">
+    <li><a href="shop-home.html">Home</a></li>
+    <li><a href="shop-products.html">Shop</a></li>
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-icon">🔍</span>
+    <span class="nav-icon">♡</span>
+    <a class="nav-icon cart-badge" href="shop-cart.html">🛍
+      <span class="badge">3</span>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">New Season 2026</p>
+    <h1 class="hero-title">Style That<br>Speaks <em>Volumes</em></h1>
+    <p class="hero-sub">Curated fashion for those who lead, not follow. Discover pieces crafted for the modern wardrobe.</p>
+    <div>
+      <a href="shop-products.html" class="btn-primary">Shop Now</a>
+      <a href="#" class="btn-outline">Lookbook</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-placeholder">
+      <div class="big-icon">👗</div>
+    </div>
+    <div class="hero-badge">
+      <span class="big-num">40%</span>
+      <span class="small-text">Off Sale Items</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <span>Free Shipping Over ₹999</span><span class="dot">✦</span>
+    <span>New Arrivals Every Week</span><span class="dot">✦</span>
+    <span>Exclusive Members Sale</span><span class="dot">✦</span>
+    <span>Hassle-Free Returns</span><span class="dot">✦</span>
+    <span>Free Shipping Over ₹999</span><span class="dot">✦</span>
+    <span>New Arrivals Every Week</span><span class="dot">✦</span>
+    <span>Exclusive Members Sale</span><span class="dot">✦</span>
+    <span>Hassle-Free Returns</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories">
+  <div class="section-header">
+    <h2 class="section-title">Shop by Category</h2>
+    <a href="shop-products.html" class="section-link">View All →</a>
+  </div>
+  <div class="category-grid">
+    <div class="cat-card">
+      <div class="cat-bg">👔</div>
+      <div class="cat-overlay"><span>Explore →</span></div>
+      <div class="cat-info">
+        <h3>Women's Fashion</h3>
+        <p>248 products</p>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg">🧥</div>
+      <div class="cat-overlay"><span>Explore →</span></div>
+      <div class="cat-info">
+        <h3>Men's Wear</h3>
+        <p>185 products</p>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg">👟</div>
+      <div class="cat-overlay"><span>Explore →</span></div>
+      <div class="cat-info">
+        <h3>Footwear</h3>
+        <p>120 products</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="featured">
+  <div class="section-header">
+    <h2 class="section-title">Featured Products</h2>
+    <a href="shop-products.html" class="section-link">View All →</a>
+  </div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <div class="product-img">👗</div>
+        <span class="product-tag-pill">New</span>
+        <button class="wishlist-btn">♡</button>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+      <p class="product-brand">Aura Studio</p>
+      <p class="product-name">Linen Midi Dress</p>
+      <div class="stars">★★★★★</div>
+      <div class="product-price">
+        <span class="price-now">₹2,499</span>
+        <span class="price-old">₹3,499</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <div class="product-img">🧴</div>
+        <button class="wishlist-btn">♡</button>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+      <p class="product-brand">Luxe Care</p>
+      <p class="product-name">Hydra Glow Serum</p>
+      <div class="stars">★★★★☆</div>
+      <div class="product-price">
+        <span class="price-now">₹1,299</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <div class="product-img">👜</div>
+        <span class="product-tag-pill">Hot</span>
+        <button class="wishlist-btn">♡</button>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+      <p class="product-brand">Aura Studio</p>
+      <p class="product-name">Structured Tote Bag</p>
+      <div class="stars">★★★★★</div>
+      <div class="product-price">
+        <span class="price-now">₹3,799</span>
+        <span class="price-old">₹4,999</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <div class="product-img">👟</div>
+        <button class="wishlist-btn">♡</button>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+      <p class="product-brand">Stride Co.</p>
+      <p class="product-name">Canvas Sneakers</p>
+      <div class="stars">★★★★☆</div>
+      <div class="product-price">
+        <span class="price-now">₹1,899</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <div class="promo-text">
+    <h2>Get <em>20% Off</em><br>Your First Order</h2>
+    <p>Sign up and use the code at checkout</p>
+  </div>
+  <div class="promo-code">
+    <span class="code">AURA20</span>
+    <span class="code-label">Promo Code</span>
+  </div>
+  <a href="shop-products.html" class="promo-btn">Shop the Sale</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="shop-home.html" class="logo">AURA</a>
+      <p>Fashion-forward pieces for the modern shopper. Quality meets style in every stitch.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="shop-products.html">Women</a></li>
+        <li><a href="shop-products.html">Men</a></li>
+        <li><a href="shop-products.html">Footwear</a></li>
+        <li><a href="shop-products.html">Accessories</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Track Order</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 AURA. All rights reserved.</p>
+    <div class="footer-social">
+      <a class="social-icon" href="#">𝕏</a>
+      <a class="social-icon" href="#">ig</a>
+      <a class="social-icon" href="#">fb</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
