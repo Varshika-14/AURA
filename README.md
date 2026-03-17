@@ -57,7 +57,7 @@ aura-shopping-website/
 
 ## 🚀 Live Demo
 
-🌐 **[View Live Site →](https://YOUR-USERNAME.github.io/aura-shopping-website/)**
+🌐 **[View Live Site →](https://winniem30.github.io/AURA/)**
 
 ## 📸 Pages Preview
 
